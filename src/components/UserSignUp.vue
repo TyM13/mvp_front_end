@@ -7,24 +7,28 @@
           ref="email"
           label="Email"
           :rules="rules"
+          v-model="email"
           hide-details="auto"
         ></v-text-field>
         <v-text-field
           ref="name"
           label="Name"
           :rules="rules"
+          v-model="name"
           hide-details="auto"
         ></v-text-field>
         <v-text-field
           ref="username"
           label="Username"
           :rules="rules"
+          v-model="username"
           hide-details="auto"
         ></v-text-field>
         <v-text-field
           ref="password"
           label="Password"
           :rules="rules"
+          v-model="password"
           hide-details="auto"
         ></v-text-field>
       </div>
@@ -38,32 +42,41 @@
 
 <script>
 import axios from "axios";
-// import cookies from "vue-cookies";
+import cookies from "vue-cookies";
 
 export default {
   methods: {
-    user_sign_up() {
+    user_sign_up(response) {
       axios
         .request({
           url: `${process.env.VUE_APP_BASE_DOMAIN}/api/user`,
           method: "POST",
           data: {
-            email: this.$refs[`email`][`value`],
-            name: this.$refs[`name`][`value`],
-            username: this.$refs[`username`][`value`],
-            password: this.$refs[`password`][`value`],
+            email: this.$refs["email"]["value"],
+            name: this.$refs["name"]["value"],
+            username: this.$refs["username"]["value"],
+            password: this.$refs["password"]["value"],
           },
         })
-        .then((response) => {
-          //   cookies.set(`token`, response[`data`][`token`]);
-          //   cookies.set(`user_id`, response[`data`][`user_id`]);
+        .then((then) => {
+          cookies.set(`token`, then[`data`][0][`token`]);
+          cookies.set(`user_id`, then[`data`][0][`user_id`]);
           response;
+          this.$router.push(`/`);
         })
         .catch((error) => {
           error;
         });
     },
   },
+
+  data: () => ({
+    rules: [(value) => !!value || "Required."],
+    email: undefined,
+    name: undefined,
+    username: undefined,
+    password: undefined,
+  }),
 };
 </script>
 
