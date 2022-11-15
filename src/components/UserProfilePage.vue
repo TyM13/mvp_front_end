@@ -5,10 +5,17 @@
     <!--contains profile photo. maybe num of posts. followed-by, following, bio, edit profile button-->
     <section v-for="(usr_info, index) in user_info" :key="index">
       <h2>Bio</h2>
-      <!-- <h4>{{ usr_info["bio"] }}</h4> -->
+      <h4>{{ usr_info["bio"] }}</h4>
     </section>
     <!-- contains all the user's posts-->
-    <section></section>
+
+    <section>
+      <v-row justify="space-around">
+        <v-avatar color="indigo">
+          <v-icon dark> mdi-account-circle </v-icon>
+        </v-avatar>
+      </v-row>
+    </section>
   </div>
 </template>
 
