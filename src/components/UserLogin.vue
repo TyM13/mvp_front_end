@@ -12,8 +12,8 @@
 
         <v-text-field
           label="Password"
-          v-model="password"
           :rules="rules"
+          v-model="password"
           hide-details="auto"
         ></v-text-field>
       </div>
@@ -43,13 +43,14 @@ export default {
           url: `${process.env.VUE_APP_BASE_DOMAIN}/api/user-login`,
           method: "POST",
           data: {
-            email: this.$refs["email"]["value"],
-            password: this.$refs["password"]["value"],
+            email: this.email,
+            password: this.password,
           },
         })
         .then((response) => {
           cookies.set(`token`, response[`data`][0][`token`]);
           cookies.set(`user_id`, response[`data`][0][`user_id`]);
+          this.$router.push(`/Profile-Page`);
           response;
         })
         .catch((error) => {
