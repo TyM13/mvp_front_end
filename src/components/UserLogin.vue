@@ -6,9 +6,16 @@
         <v-text-field
           label="Email"
           :rules="rules"
+          v-model="email"
           hide-details="auto"
         ></v-text-field>
-        <v-text-field label="Password"></v-text-field>
+
+        <v-text-field
+          label="Password"
+          v-model="password"
+          :rules="rules"
+          hide-details="auto"
+        ></v-text-field>
       </div>
       <v-btn class="ma-2" @click="user_login" outlined color="black">
         <h2>Login</h2></v-btn
@@ -27,6 +34,7 @@
 <script>
 import axios from "axios";
 import cookies from "vue-cookies";
+
 export default {
   methods: {
     user_login() {
@@ -35,13 +43,13 @@ export default {
           url: `${process.env.VUE_APP_BASE_DOMAIN}/api/user-login`,
           method: "POST",
           data: {
-            email: this.$refs[`usr_email`][`value`],
-            password: this.$refs[`usr_password`][`value`],
+            email: this.$refs["email"]["value"],
+            password: this.$refs["password"]["value"],
           },
         })
         .then((response) => {
-          cookies.set(`token`, response[`data`][`token`]);
-          cookies.set(`client_id`, response[`data`][`client_id`]);
+          cookies.set(`token`, response[`data`][0][`token`]);
+          cookies.set(`user_id`, response[`data`][0][`user_id`]);
           response;
         })
         .catch((error) => {
@@ -49,6 +57,12 @@ export default {
         });
     },
   },
+
+  data: () => ({
+    rules: [(value) => !!value || "Required."],
+    email: undefined,
+    password: undefined,
+  }),
 };
 </script>
 

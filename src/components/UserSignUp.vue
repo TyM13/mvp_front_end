@@ -46,7 +46,7 @@ import cookies from "vue-cookies";
 
 export default {
   methods: {
-    user_sign_up(response) {
+    user_sign_up() {
       axios
         .request({
           url: `${process.env.VUE_APP_BASE_DOMAIN}/api/user`,
@@ -58,9 +58,9 @@ export default {
             password: this.$refs["password"]["value"],
           },
         })
-        .then((then) => {
-          cookies.set(`token`, then[`data`][0][`token`]);
-          cookies.set(`user_id`, then[`data`][0][`user_id`]);
+        .then((response) => {
+          cookies.set(`token`, response[`data`][0][`token`]);
+          cookies.set(`user_id`, response[`data`][0][`user_id`]);
           response;
           this.$router.push(`/`);
         })
