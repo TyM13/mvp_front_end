@@ -10,11 +10,7 @@
     <!-- contains all the user's posts-->
 
     <section>
-      <v-row justify="space-around">
-        <v-avatar color="indigo">
-          <v-icon dark> mdi-account-circle </v-icon>
-        </v-avatar>
-      </v-row>
+      <v-avatar color="accent" size="41"></v-avatar>
     </section>
   </div>
 </template>
@@ -27,6 +23,7 @@ export default {
     user_info: [],
   }),
 
+  // gets the cookies restaurant_id (name, value) and sets it as the variable restaurant_id
   mounted() {
     let user_id = cookies.get("user_id");
     axios

@@ -52,24 +52,27 @@ export default {
           url: `${process.env.VUE_APP_BASE_DOMAIN}/api/user`,
           method: "POST",
           data: {
-            email: this.$refs["email"]["value"],
-            name: this.$refs["name"]["value"],
-            username: this.$refs["username"]["value"],
-            password: this.$refs["password"]["value"],
+            // gets the value of the input of the email name, username and password to send as data to the api
+            email: this.email,
+            name: this.name,
+            username: this.username,
+            password: this.password,
           },
         })
         .then((response) => {
+          // sets the token and user_id as a cookie when the user logs in and sends them to their profile page
           cookies.set(`token`, response[`data`][0][`token`]);
           cookies.set(`user_id`, response[`data`][0][`user_id`]);
           response;
-          this.$router.push(`/`);
+          this.$router.push(`/Profile-Page`);
         })
         .catch((error) => {
           error;
         });
     },
   },
-
+  // rules: saying that it requires the input boxes to be filled in
+  // created the variable email name, username and password and set the value to undefined
   data: () => ({
     rules: [(value) => !!value || "Required."],
     email: undefined,

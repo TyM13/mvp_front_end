@@ -39,15 +39,18 @@ export default {
   methods: {
     user_login() {
       axios
+        // post request for the user-login api
         .request({
           url: `${process.env.VUE_APP_BASE_DOMAIN}/api/user-login`,
           method: "POST",
           data: {
+            // gets the value of the input of the email and password to send as data to the api
             email: this.email,
             password: this.password,
           },
         })
         .then((response) => {
+          // sets the token and user_id as a cookie when the user logs in
           cookies.set(`token`, response[`data`][0][`token`]);
           cookies.set(`user_id`, response[`data`][0][`user_id`]);
           this.$router.push(`/Profile-Page`);
@@ -58,7 +61,8 @@ export default {
         });
     },
   },
-
+  // rules: saying that it requires the input boxes to be filled in
+  // created the variable email and password and set the value to undefined
   data: () => ({
     rules: [(value) => !!value || "Required."],
     email: undefined,
